@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
+import PropTypes from 'prop-types'
+
 
 
 export class News extends Component {
+    static defaultProps={
+        pageSize:18 ,
+        country:"in",
+        category:"general"
+    }
+    static propTypes={
+        pageSize:PropTypes.number,
+        country:PropTypes.string,
+        category:PropTypes.string,
+    }
     constructor(){
         super();
         this.state={
@@ -14,7 +26,7 @@ export class News extends Component {
         }
     }
     async componentDidMount(){
-        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=c3abb2dbe4b5430eaae6242de90e357f&page=1&pageSize=18`
+        let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c3abb2dbe4b5430eaae6242de90e357f&page=1&pageSize=${this.props.pageSize}`
         let data = await fetch(url);
         let parsedData=await data.json();
         let ttlArt=parsedData.totalResults;
@@ -27,7 +39,7 @@ export class News extends Component {
     }
     handleNextClick=async()=>{
         this.setState({loading:true})
-        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=c3abb2dbe4b5430eaae6242de90e357f&pageSize=18&page=${this.state.page+1}`
+        let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c3abb2dbe4b5430eaae6242de90e357f&pageSize=${this.props.pageSize}&page=${this.state.page+1}`
         let data = await fetch(url);
         let parsedData=await data.json();
         this.setState({
@@ -38,7 +50,7 @@ export class News extends Component {
     }
     handlePrevClick=async()=>{
         this.setState({loading:true})
-        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=c3abb2dbe4b5430eaae6242de90e357f&pageSize=18&page=${this.state.page-1}`
+        let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c3abb2dbe4b5430eaae6242de90e357f&pageSize=${this.props.pageSize}&page=${this.state.page-1}`
         let data = await fetch(url);
         let parsedData=await data.json();
         this.setState({
@@ -66,9 +78,9 @@ export class News extends Component {
             </div>
             
             <div className='d-flex justify-content-between'>
-                <button type="button" disabled={this.state.page<=1} onClick={this.handlePrevClick} class="btn btn-dark">&larr; Previous</button>
+                <button type="button" disabled={this.state.page<=1} onClick={this.handlePrevClick} className="btn btn-dark">&larr; Previous</button>
                 <span>{this.state.page}</span>
-                <button type="button" disabled={this.state.page+1>this.state.maxPage} onClick={this.handleNextClick} class="btn btn-dark">Next &rarr;</button>
+                <button type="button" disabled={this.state.page+1>this.state.maxPage} onClick={this.handleNextClick} className="btn btn-dark">Next &rarr;</button>
             </div>
 
         </div>

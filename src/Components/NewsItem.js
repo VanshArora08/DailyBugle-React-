@@ -5,7 +5,7 @@ export class NewsItem extends Component {
     let {title,description,imageUrl,newsUrl}=this.props;
     return (
       <div>
-        <div className="card grid-md-4" style={{width: "18rem"}}>
+        <div className="card grid-md-4">
           <img src={imageUrl?imageUrl:"https://static.toiimg.com/thumb/msid-47529300,width-1070,height-580,imgsize-110164,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg"} className="card-img-top" alt="..."/>
           <div className="card-body">
               <h5 className="card-title">{title.slice(0,45)}...</h5>
