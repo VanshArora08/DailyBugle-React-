@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem';
-import Spinner from './Spinner';
+import SpinnerLoad from './Spinner';
 import PropTypes from 'prop-types'
 
 
@@ -20,7 +20,7 @@ export class News extends Component {
         super();
         this.state={
             articles:[],
-            loading:false,
+            loading:true,
             page:1,
             maxPage:1,
         }
@@ -34,6 +34,7 @@ export class News extends Component {
         this.setState({
             articles : parsedData.articles,
             maxPage : mp,
+            loading:false
         })
         console.log(mp);
     }
@@ -66,7 +67,7 @@ export class News extends Component {
         <div className='container my-5'>
             <div className="text-center">
             <h1>Daily Bugle-Headlines on fire</h1>
-            {this.state.loading && <Spinner/>}
+            {this.state.loading && <SpinnerLoad/>}
             </div>
             <div className="row my-4">
                 {!this.state.loading && this.state.articles.map((element)=>{
